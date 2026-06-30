@@ -1,0 +1,67 @@
+{
+  "updatedAt": "2026-06-30T01:41:52.477Z",
+  "framework": "Next.js",
+  "dbModels": [
+    "Business",
+    "Client",
+    "Invoice",
+    "InvoiceItem",
+    "Payment"
+  ],
+  "apiRoutes": [
+    "app/api/client/route.ts",
+    "app/api/invoice/[id]/mark-paid/route.ts",
+    "app/api/invoice/[id]/send/route.ts",
+    "app/api/invoice/route.ts",
+    "app/api/stripe/create-checkout/route.ts"
+  ],
+  "pages": [
+    "app/dashboard/invoices/[id]/page.tsx",
+    "app/dashboard/invoices/new/page.tsx",
+    "app/dashboard/invoices/page.tsx",
+    "app/dashboard/page.tsx",
+    "app/page.tsx",
+    "app/sign-in/[[...sign-in]]/page.tsx",
+    "app/sign-up/[[...sign-up]]/page.tsx"
+  ],
+  "components": [
+    "app/dashboard/dashboard-client.tsx",
+    "app/dashboard/invoices/[id]/invoice-detail-client.tsx",
+    "app/dashboard/invoices/invoices-list-client.tsx",
+    "app/dashboard/invoices/new/new-invoice-client.tsx",
+    "app/dashboard/layout.tsx",
+    "app/layout.tsx",
+    "components/ui/badge.tsx",
+    "components/ui/button.tsx",
+    "components/ui/card.tsx",
+    "components/ui/input.tsx",
+    "components/ui/select.tsx",
+    "components/ui/table.tsx",
+    "components/ui/textarea.tsx"
+  ],
+  "dependencies": [
+    "@clerk/nextjs",
+    "@prisma/client",
+    "@stripe/stripe-js",
+    "@types/node",
+    "@types/react",
+    "@types/react-dom",
+    "autoprefixer",
+    "clsx",
+    "date-fns",
+    "lucide-react",
+    "next",
+    "postcss",
+    "prisma",
+    "react",
+    "react-dom",
+    "react-hot-toast",
+    "sonner",
+    "stripe",
+    "tailwind-merge",
+    "tailwindcss",
+    "tsx",
+    "typescript"
+  ],
+  "fileCount": 45
+}
