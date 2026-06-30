@@ -6,8 +6,15 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
+import { Select } from "@/components/ui/select";
 import { ArrowLeft, Plus, Trash2 } from "lucide-react";
 import { toast } from "sonner";
+
+type ClientOption = {
+  id: string;
+  name: string;
+  email: string;
+};
 
 type LineItem = {
   description: string;
@@ -15,7 +22,13 @@ type LineItem = {
   unitPrice: number;
 };
 
-export function NewInvoiceClient() {
+type Props = {
+  businessId: string;
+  nextNumber: string;
+  clients: ClientOption[];
+};
+
+export function NewInvoiceClient({ businessId, nextNumber, clients }: Props) {
   const router = useRouter();
   const [clientId, setClientId] = useState("");
   const [issueDate, setIssueDate] = useState(new Date().toISOString().split("T")[0]);
@@ -104,7 +117,10 @@ export function NewInvoiceClient() {
           <ArrowLeft className="h-4 w-4 mr-2" />
           Back
         </Button>
-        <h1 className="text-3xl font-bold">New Invoice</h1>
+        <div>
+          <h1 className="text-3xl font-bold">New Invoice</h1>
+          <p className="text-sm text-muted-foreground">{nextNumber}</p>
+        </div>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-8">
@@ -113,12 +129,19 @@ export function NewInvoiceClient() {
           <h2 className="text-lg font-semibold mb-4">Details</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="text-sm font-medium mb-1 block">Client ID</label>
-              <Input
-                placeholder="Enter client ID"
+              <label className="text-sm font-medium mb-1 block">Client</label>
+              <select
+                className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm"
                 value={clientId}
                 onChange={(e) => setClientId(e.target.value)}
-              />
+              >
+                <option value="">Select a client...</option>
+                {clients.map((c) => (
+                  <option key={c.id} value={c.id}>
+                    {c.name} ({c.email})
+                  </option>
+                ))}
+              </select>
             </div>
             <div />
             <div>
@@ -185,7 +208,7 @@ export function NewInvoiceClient() {
                     type="number"
                     min="0"
                     step="0.01"
-                    placeholder="Price"
+                    placeholder="Unit price"
                     value={item.unitPrice}
                     onChange={(e) => updateItem(idx, "unitPrice", parseFloat(e.target.value) || 0)}
                   />
@@ -196,29 +219,27 @@ export function NewInvoiceClient() {
                 <Button
                   type="button"
                   variant="ghost"
+                  size="icon"
                   onClick={() => removeItem(idx)}
-                  disabled={items.length === 1}
+                  className="mt-1"
                 >
-                  <Trash2 className="h-4 w-4" />
+                  <Trash2 className="h-4 w-4 text-red-400" />
                 </Button>
               </div>
             ))}
           </div>
 
           {/* Totals */}
-          <div className="border-t mt-4 pt-4 space-y-1 text-sm">
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Subtotal</span>
-              <span>{formatCurrency(subtotal)}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Tax ({taxRate}%)</span>
-              <span>{formatCurrency(taxAmount)}</span>
-            </div>
-            <div className="flex justify-between font-semibold text-base pt-2 border-t">
-              <span>Total</span>
-              <span>{formatCurrency(total)}</span>
-            </div>
+          <div className="border-t border-border mt-4 pt-4 space-y-1 text-right">
+            <p className="text-sm text-muted-foreground">
+              Subtotal: {formatCurrency(subtotal)}
+            </p>
+            {taxRate > 0 && (
+              <p className="text-sm text-muted-foreground">
+                Tax ({taxRate}%): {formatCurrency(taxAmount)}
+              </p>
+            )}
+            <p className="text-xl font-bold">Total: {formatCurrency(total)}</p>
           </div>
         </Card>
 
@@ -226,7 +247,7 @@ export function NewInvoiceClient() {
         <Card>
           <h2 className="text-lg font-semibold mb-4">Notes</h2>
           <Textarea
-            placeholder="Optional notes or payment instructions..."
+            placeholder="Payment terms, additional notes..."
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
             rows={3}
@@ -243,7 +264,7 @@ export function NewInvoiceClient() {
             Cancel
           </Button>
           <Button type="submit" disabled={submitting}>
-            {submitting ? "Creating..." : "Create Invoice"}
+            {submitting ? "Creating..." : `Create Invoice ${nextNumber}`}
           </Button>
         </div>
       </form>
