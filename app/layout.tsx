@@ -1,31 +1,33 @@
 import type { Metadata } from "next";
-import { ClerkProvider } from "@clerk/nextjs";
-import { dark } from "@clerk/themes";
 import "./globals.css";
+import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Invoicely — Smart Invoicing",
-  description: "Create, send, and collect payments on invoices — all in one place.",
+  title: "InvoiceFlow — Modern Client Invoicing",
+  description: "Create, send, and track professional invoices for your clients",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <ClerkProvider
-      appearance={{
-        baseTheme: dark,
-        variables: {
-          colorPrimary: "hsl(252, 95%, 70%)",
-          colorBackground: "hsl(240, 10%, 4%)",
-          colorInputBackground: "hsl(240, 8%, 7%)",
-          colorText: "hsl(0, 0%, 98%)",
-          colorTextSecondary: "hsl(240, 5%, 65%)",
-          borderRadius: "0.75rem",
-        },
-      }}
-    >
-      <html lang="en" className="dark" style={{ ["--font-sans" as string]: "Inter, system-ui, sans-serif" }}>
-        <body>{children}</body>
-      </html>
-    </ClerkProvider>
+    <html lang="en" className="dark" style={{ ["--font-sans" as string]: "Inter, system-ui, sans-serif" }}>
+      <body className="min-h-screen">
+        <nav className="border-b">
+          <div className="mx-auto flex h-14 max-w-6xl items-center gap-6 px-4 sm:px-6 lg:px-8">
+            <Link href="/" className="text-lg font-bold gradient-text">
+              InvoiceFlow
+            </Link>
+            <div className="flex items-center gap-4 text-sm text-muted-foreground">
+              <Link href="/" className="transition hover:text-foreground">
+                Dashboard
+              </Link>
+              <Link href="/invoices/new" className="transition hover:text-foreground">
+                New Invoice
+              </Link>
+            </div>
+          </div>
+        </nav>
+        {children}
+      </body>
+    </html>
   );
 }
