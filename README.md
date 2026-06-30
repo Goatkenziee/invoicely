@@ -4,12 +4,12 @@ Create, send, and track professional invoices for your clients with a modern dar
 
 ## ✨ Features
 
-- **Dashboard** — Overview of all invoices with stats (total, paid, outstanding, overdue)
-- **Create Invoices** — Multi-step form with client info, line items, tax rate, and notes
-- **Invoice Detail** — View full invoice with Stripe payment link integration
-- **Status Tracking** — Draft → Sent → Paid lifecycle with visual badges
+- **Dashboard** — Overview of all invoices with stats (total, paid, outstanding, overdue) and search/filter
+- **Create Invoices** — Full form with client info, dynamic line items, tax rate, due date, and notes
+- **Invoice Detail** — View full invoice with line-item breakdown, tax calculation, and status badge
+- **Status Tracking** — Draft → Sent → Paid lifecycle with color-coded badges
 - **Search & Filter** — Find invoices by client name, status, or invoice number
-- **Dark Theme** — Modern, premium dark UI built with Tailwind CSS
+- **Dark Theme** — Modern, premium dark UI with violet-to-cyan gradient accents
 
 ## Tech Stack
 
@@ -31,23 +31,26 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## Environment Variables
 
-Copy `.env.example` to `.env.local` and fill in:
+Copy `.env.example` to `.env.local` and fill in (all optional for local dev):
 
-| Variable | Required | Description |
-|---|---|---|
-| `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` | No | Clerk auth (optional for now) |
-| `CLERK_SECRET_KEY` | No | Clerk auth secret |
-| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | No | Stripe publishable key |
-| `STRIPE_SECRET_KEY` | No | Stripe secret key |
-| `STRIPE_WEBHOOK_SECRET` | No | Stripe webhook secret |
-| `DATABASE_URL` | No | Postgres connection string (for production) |
+| Variable | Description |
+|---|---|
+| `DATABASE_URL` | Postgres connection string (for production) |
+| `STRIPE_SECRET_KEY` | Stripe secret key |
+| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Stripe publishable key |
+| `STRIPE_WEBHOOK_SECRET` | Stripe webhook secret |
 
-## Deploy
+## Live Preview
 
-The app is ready to deploy on Vercel:
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Goatkenziee/invoicely)
+The app is running at:
+**https://3000-ibx7rki8278dy5lfpx5a4.e2b.app**
 
 ## GitHub
 
 Repository: [github.com/Goatkenziee/invoicely](https://github.com/Goatkenziee/invoicely)
+
+## Deploy to Vercel
+
+1. Go to **Settings → Integrations → Vercel** and reconnect your Vercel account
+2. Run the deploy command again, or connect the GitHub repo manually in Vercel
+3. Set `DATABASE_URL` and `STRIPE_SECRET_KEY` in Vercel environment variables
