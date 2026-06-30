@@ -4,9 +4,9 @@ const isPublicRoute = createRouteMatcher([
   "/",
   "/sign-in(.*)",
   "/sign-up(.*)",
-  "/invoice/(.*)", // Client invoice view (public)
-  "/api/invoice/(.*)", // Public invoice API
-  "/api/webhook(.*)", // Stripe webhooks
+  "/invoice/(.*)",
+  "/api/invoice/(.*)",
+  "/api/webhook(.*)",
 ]);
 
 export default clerkMiddleware((auth, req) => {

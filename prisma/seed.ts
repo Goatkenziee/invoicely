@@ -3,133 +3,104 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function main() {
-  // Create a sample business
+  console.log("Seeding database...");
+
+  // Create a demo business
   const business = await prisma.business.upsert({
-    where: { email: "hello@acmecorp.com" },
+    where: { userId: "demo-user-id" },
     update: {},
     create: {
+      userId: "demo-user-id",
       name: "Acme Corp",
-      email: "hello@acmecorp.com",
+      email: "billing@acmecorp.com",
       phone: "+1 (555) 123-4567",
       address: "123 Business Ave, Suite 100, San Francisco, CA 94102",
-      userId: "sample_user_id", // Replace with actual Clerk user ID
     },
   });
 
-  // Create sample clients
+  // Create clients
   const clients = await Promise.all([
-    prisma.client.upsert({
-      where: { id: "client-1" },
-      update: {},
-      create: {
-        id: "client-1",
-        name: "TechStart Inc.",
-        email: "billing@techstart.io",
-        address: "456 Innovation Drive, Palo Alto, CA 94301",
+    prisma.client.create({
+      data: {
+        name: "Sarah Johnson",
+        email: "sarah@example.com",
+        address: "456 Oak Street, Apt 2B, New York, NY 10001",
         businessId: business.id,
       },
     }),
-    prisma.client.upsert({
-      where: { id: "client-2" },
-      update: {},
-      create: {
-        id: "client-2",
-        name: "DesignStudio Co.",
-        email: "accounts@designstudio.co",
-        address: "789 Creative Lane, New York, NY 10012",
+    prisma.client.create({
+      data: {
+        name: "TechStart Inc",
+        email: "accounts@techstart.io",
+        address: "789 Innovation Drive, Palo Alto, CA 94304",
         businessId: business.id,
       },
     }),
-    prisma.client.upsert({
-      where: { id: "client-3" },
-      update: {},
-      create: {
-        id: "client-3",
-        name: "CloudOps Solutions",
-        email: "payables@cloudops.com",
-        address: "321 Server Row, Austin, TX 78701",
+    prisma.client.create({
+      data: {
+        name: "Maria Garcia Design",
+        email: "maria@mgdesign.co",
+        address: "321 Creative Lane, Austin, TX 78701",
         businessId: business.id,
       },
     }),
   ]);
 
-  // Create sample invoices
-  const invoice1 = await prisma.invoice.upsert({
-    where: { id: "invoice-1" },
-    update: {},
-    create: {
-      id: "invoice-1",
+  // Create invoices
+  const now = new Date();
+  const invoices = [
+    {
       number: "INV-001",
       status: "PAID",
-      issueDate: new Date("2024-12-01"),
-      dueDate: new Date("2024-12-15"),
-      subtotal: 5000,
-      taxRate: 8.5,
-      taxAmount: 425,
-      total: 5425,
-      businessId: business.id,
-      clientId: "client-1",
-      items: {
-        create: [
-          { description: "Website Development - Phase 1", quantity: 1, unitPrice: 3500, amount: 3500 },
-          { description: "UI/UX Design", quantity: 1, unitPrice: 1500, amount: 1500 },
-        ],
-      },
+      total: 2500.00,
+      issueDate: new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000),
+      dueDate: new Date(now.getTime() - 15 * 24 * 60 * 60 * 1000),
+      clientId: clients[0].id,
+      items: [
+        { description: "Website Redesign", quantity: 1, rate: 2000, amount: 2000 },
+        { description: "Logo Package", quantity: 1, rate: 500, amount: 500 },
+      ],
     },
-  });
-
-  const invoice2 = await prisma.invoice.upsert({
-    where: { id: "invoice-2" },
-    update: {},
-    create: {
-      id: "invoice-2",
+    {
       number: "INV-002",
       status: "SENT",
-      issueDate: new Date("2024-12-10"),
-      dueDate: new Date("2024-12-31"),
-      subtotal: 2800,
-      taxRate: 8.5,
-      taxAmount: 238,
-      total: 3038,
-      businessId: business.id,
-      clientId: "client-2",
-      items: {
-        create: [
-          { description: "Brand Identity Package", quantity: 1, unitPrice: 2000, amount: 2000 },
-          { description: "Social Media Templates (5 sets)", quantity: 5, unitPrice: 160, amount: 800 },
-        ],
-      },
+      total: 4800.00,
+      issueDate: new Date(now.getTime() - 14 * 24 * 60 * 60 * 1000),
+      dueDate: new Date(now.getTime() + 16 * 24 * 60 * 60 * 1000),
+      clientId: clients[1].id,
+      items: [
+        { description: "API Development", quantity: 40, rate: 95, amount: 3800 },
+        { description: "Database Setup", quantity: 1, rate: 1000, amount: 1000 },
+      ],
     },
-  });
-
-  const invoice3 = await prisma.invoice.upsert({
-    where: { id: "invoice-3" },
-    update: {},
-    create: {
-      id: "invoice-3",
+    {
       number: "INV-003",
       status: "DRAFT",
-      issueDate: new Date("2024-12-15"),
-      dueDate: new Date("2025-01-15"),
-      subtotal: 4200,
-      taxRate: 0,
-      taxAmount: 0,
-      total: 4200,
-      businessId: business.id,
-      clientId: "client-3",
-      items: {
-        create: [
-          { description: "Cloud Infrastructure Setup", quantity: 1, unitPrice: 3200, amount: 3200 },
-          { description: "Monthly Maintenance Retainer", quantity: 1, unitPrice: 1000, amount: 1000 },
-        ],
-      },
+      total: 1800.00,
+      issueDate: now,
+      dueDate: new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000),
+      clientId: clients[2].id,
+      items: [
+        { description: "Brand Identity Package", quantity: 1, rate: 1500, amount: 1500 },
+        { description: "Social Media Kit", quantity: 1, rate: 300, amount: 300 },
+      ],
     },
-  });
+  ];
 
-  console.log("✅ Seed complete!");
-  console.log(`  Business: ${business.name}`);
-  console.log(`  Clients: ${clients.length}`);
-  console.log(`  Invoices: 3`);
+  for (const inv of invoices) {
+    const { items, ...invoiceData } = inv;
+    await prisma.invoice.create({
+      data: {
+        ...invoiceData,
+        businessId: business.id,
+        items: {
+          create: items,
+        },
+      },
+    });
+  }
+
+  console.log("Seed complete!");
 }
 
 main()

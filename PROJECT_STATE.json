@@ -1,69 +1,22 @@
 {
-  "updatedAt": "2026-06-30T04:14:02.408Z",
-  "framework": "Next.js",
-  "dbModels": [
-    "Business",
-    "Client",
-    "Invoice",
-    "InvoiceItem",
-    "Payment"
+  "status": "in-progress",
+  "version": "0.1.0",
+  "completed": [
+    "Landing page",
+    "Clerk auth",
+    "Dashboard layout",
+    "Dashboard overview",
+    "Invoice list",
+    "New invoice form",
+    "Invoice detail + Stripe pay",
+    "Client CRUD API",
+    "Stripe checkout API",
+    "Mark-paid / send API"
   ],
-  "apiRoutes": [
-    "app/api/client/route.ts",
-    "app/api/invoice/[id]/mark-paid/route.ts",
-    "app/api/invoice/[id]/route.ts",
-    "app/api/invoice/[id]/send/route.ts",
-    "app/api/invoice/route.ts",
-    "app/api/stripe/create-checkout/route.ts"
-  ],
-  "pages": [
-    "app/dashboard/invoices/[id]/page.tsx",
-    "app/dashboard/invoices/new/page.tsx",
-    "app/dashboard/invoices/page.tsx",
-    "app/dashboard/page.tsx",
-    "app/page.tsx",
-    "app/sign-in/[[...sign-in]]/page.tsx",
-    "app/sign-up/[[...sign-up]]/page.tsx"
-  ],
-  "components": [
-    "app/dashboard/dashboard-client.tsx",
-    "app/dashboard/invoices/[id]/invoice-detail-client.tsx",
-    "app/dashboard/invoices/invoices-list-client.tsx",
-    "app/dashboard/invoices/new/new-invoice-client.tsx",
-    "app/dashboard/layout.tsx",
-    "app/layout.tsx",
-    "components/ui/badge.tsx",
-    "components/ui/button.tsx",
-    "components/ui/card.tsx",
-    "components/ui/input.tsx",
-    "components/ui/select.tsx",
-    "components/ui/table.tsx",
-    "components/ui/textarea.tsx"
-  ],
-  "dependencies": [
-    "@clerk/nextjs",
-    "@clerk/themes",
-    "@prisma/client",
-    "@stripe/stripe-js",
-    "@types/node",
-    "@types/react",
-    "@types/react-dom",
-    "autoprefixer",
-    "clsx",
-    "date-fns",
-    "lucide-react",
-    "next",
-    "postcss",
-    "prisma",
-    "react",
-    "react-dom",
-    "react-hot-toast",
-    "sonner",
-    "stripe",
-    "tailwind-merge",
-    "tailwindcss",
-    "tsx",
-    "typescript"
-  ],
-  "fileCount": 46
+  "pending": [
+    "Clients management page",
+    "Settings page",
+    "Public invoice view",
+    "Email notifications"
+  ]
 }
