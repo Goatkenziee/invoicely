@@ -2,7 +2,7 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 type Variant = "default" | "ghost" | "outline";
-type Size = "sm" | "md" | "lg";
+type Size = "sm" | "md" | "lg" | "icon";
 
 const variants: Record<Variant, string> = {
   default: "bg-primary text-primary-foreground hover:opacity-90 glow",
@@ -14,6 +14,7 @@ const sizes: Record<Size, string> = {
   sm: "h-9 px-3 text-xs rounded-md",
   md: "h-11 px-6 text-sm rounded-lg",
   lg: "h-12 px-8 text-base rounded-lg",
+  icon: "h-9 w-9 rounded-md",
 };
 
 export const Button = React.forwardRef<HTMLButtonElement, React.ButtonHTMLAttributes<HTMLButtonElement> & { variant?: Variant; size?: Size }>(
