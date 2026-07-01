@@ -3,8 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:./dev.db"
 }
 
 model Business {
@@ -56,23 +56,23 @@ model Invoice {
 }
 
 model InvoiceItem {
-  id        String @id @default(cuid())
-  invoiceId String
+  id          String @id @default(cuid())
+  invoiceId   String
   description String
-  quantity  Int    @default(1)
-  rate      Float  @default(0)
-  amount    Float  @default(0)
+  quantity    Int    @default(1)
+  rate        Float  @default(0)
+  amount      Float  @default(0)
 
   invoice Invoice @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
 }
 
 model Payment {
-  id        String   @id @default(cuid())
-  amount    Float
-  status    String   @default("PENDING")
+  id                   String   @id @default(cuid())
+  amount               Float
+  status               String   @default("PENDING")
   stripePaymentIntentId String?
-  invoiceId String
-  createdAt DateTime @default(now())
+  invoiceId            String
+  createdAt            DateTime @default(now())
 
   invoice Invoice @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
 }

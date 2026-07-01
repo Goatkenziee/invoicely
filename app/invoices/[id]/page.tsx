@@ -7,13 +7,24 @@ import { InvoicePreview } from "@/components/InvoicePreview";
 import { RefreshCw } from "lucide-react";
 
 export default function InvoiceDetailPage() {
-  const { id } = useParams<{ id: string }>();
+  const params = useParams();
+  const id = params?.id as string | undefined;
   const router = useRouter();
+
+  if (!id) {
+    return (
+      <div className="flex flex-col items-center justify-center py-20">
+        <p className="text-lg font-semibold">Invoice not found</p>
+        <p className="text-sm text-muted-foreground">No invoice ID provided.</p>
+      </div>
+    );
+  }
+
   const [invoice, setInvoice] = useState<Invoice | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`/api/invoices/${id}`)
+    fetch(`/api/invoices?id=${id}`)
       .then((res) => {
         if (!res.ok) throw new Error("Not found");
         return res.json();
@@ -24,10 +35,10 @@ export default function InvoiceDetailPage() {
   }, [id]);
 
   async function handleMarkPaid(invoiceId: string) {
-    const res = await fetch(`/api/invoices/${invoiceId}`, {
+    const res = await fetch(`/api/invoices`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ action: "pay" }),
+      body: JSON.stringify({ id: invoiceId, action: "pay" }),
     });
     if (res.ok) {
       const updated = await res.json();

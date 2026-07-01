@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-30T20:21:52.578Z",
+  "updatedAt": "2026-07-01T05:40:20.923Z",
   "framework": "Next.js",
   "dbModels": [
     "Business",
@@ -31,30 +31,23 @@
     "components/ui/textarea.tsx"
   ],
   "dependencies": [
-    "@clerk/nextjs",
-    "@clerk/themes",
-    "@prisma/client",
-    "@stripe/stripe-js",
     "@types/node",
     "@types/react",
     "@types/react-dom",
     "autoprefixer",
     "clsx",
     "date-fns",
+    "eslint",
+    "eslint-config-next",
     "lucide-react",
     "next",
     "postcss",
-    "postcss-load-config",
-    "prisma",
     "react",
     "react-dom",
-    "react-hot-toast",
     "sonner",
-    "stripe",
     "tailwind-merge",
     "tailwindcss",
-    "tsx",
     "typescript"
   ],
-  "fileCount": 38
+  "fileCount": 36
 }

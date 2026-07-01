@@ -1,9 +1,7 @@
-import { prisma } from "./db";
+import { getInvoices } from "./db";
 
-export async function generateInvoiceNumber(businessId: string): Promise<string> {
-  const count = await prisma.invoice.count({
-    where: { businessId },
-  });
-  const next = count + 1;
+export async function generateInvoiceNumber(): Promise<string> {
+  const invoices = getInvoices();
+  const next = invoices.length + 1;
   return `INV-${String(next).padStart(3, "0")}`;
 }

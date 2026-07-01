@@ -33,15 +33,15 @@ export function InvoiceDashboard() {
 
   async function handleDelete(id: string) {
     if (!confirm("Delete this invoice?")) return;
-    const res = await fetch(`/api/invoices/${id}`, { method: "DELETE" });
+    const res = await fetch(`/api/invoices?id=${id}`, { method: "DELETE" });
     if (res.ok) setInvoices((prev) => prev.filter((inv) => inv.id !== id));
   }
 
   async function handleMarkPaid(id: string) {
-    const res = await fetch(`/api/invoices/${id}`, {
+    const res = await fetch(`/api/invoices`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ action: "pay" }),
+      body: JSON.stringify({ id, action: "pay" }),
     });
     if (res.ok) fetchInvoices();
   }
