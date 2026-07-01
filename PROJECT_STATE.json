@@ -1,13 +1,7 @@
 {
-  "updatedAt": "2026-07-01T05:40:20.923Z",
+  "updatedAt": "2026-07-01T05:54:07.662Z",
   "framework": "Next.js",
-  "dbModels": [
-    "Business",
-    "Client",
-    "Invoice",
-    "InvoiceItem",
-    "Payment"
-  ],
+  "dbModels": [],
   "apiRoutes": [
     "app/api/invoices/[id]/route.ts",
     "app/api/invoices/route.ts"
@@ -15,7 +9,8 @@
   "pages": [
     "app/invoices/[id]/page.tsx",
     "app/invoices/new/page.tsx",
-    "app/page.tsx"
+    "app/page.tsx",
+    "pages/_document.tsx"
   ],
   "components": [
     "app/layout.tsx",
@@ -49,5 +44,5 @@
     "tailwindcss",
     "typescript"
   ],
-  "fileCount": 36
+  "fileCount": 35
 }
